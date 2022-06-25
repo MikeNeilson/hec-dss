@@ -20,28 +20,18 @@ jobs:
           distribution: 'adopt'
           java-version: '8'
 
-      - name: build main library
+      - name: CMake initialization
         run: |
-          cd heclib
-          make
+          cmake .
 
-      - name: build and run basic C test programs
+      - name: build 
         run: |
-          cd test/C
-          ./unix_test
+          cmake --build .          
 
-      - name: build and run Dss-C test program
+      - name: Run Tests
         run: |
-          cd test/Dss-C
-          make test
+          ctest . --output-on-failure
 
-      - name: build and run Fortran test program
-        run: |
-          cd test/Fortran
-          make test
-
-      - name: Run a one-line script
-        run:  ls -l       #java -version
 
       # Save some artifacts
       - name: upload-artifacts hecdss.dll and javaHeclib.dll
